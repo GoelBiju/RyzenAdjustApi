@@ -1,0 +1,12 @@
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\libryzenadj.dll
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\InteropTest.exe.config
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\InteropTest.exe
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\InteropTest.pdb
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\obj\x64\Debug\InteropTest.csprojAssemblyReference.cache
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\obj\x64\Debug\InteropTest.csproj.CoreCompileInputs.cache
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\obj\x64\Debug\InteropTest.exe
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\obj\x64\Debug\InteropTest.pdb
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\WinRing0x64.dll
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\WinRing0x64.exp
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\WinRing0x64.lib
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\WinRing0x64.sys

@@ -1,0 +1,8 @@
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\obj\x64\Release\InteropTest.csprojAssemblyReference.cache
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\obj\x64\Release\InteropTest.csproj.CoreCompileInputs.cache
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Release\libryzenadj.dll
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Release\InteropTest.exe.config
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Release\InteropTest.exe
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Release\InteropTest.pdb
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\obj\x64\Release\InteropTest.exe
+C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\obj\x64\Release\InteropTest.pdb
