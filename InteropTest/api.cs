@@ -106,5 +106,19 @@ namespace InteropTest
             // Return the ryzen access object.
             return ry;
         }
+
+        public int SetStapmLimit(ryzen_access ry, uint value)
+        {
+            smu_service_args_t args = new smu_service_args_t();
+            args.arg0 = value;
+
+            if (accessSmu.SMUServiceReq(ry.mp1_smu, 0x1a, args).response == 0x01)
+            {
+                return 0;
+            } else
+            {
+                return -1;
+            }
+        }
     }
 }

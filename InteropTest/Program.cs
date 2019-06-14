@@ -26,6 +26,9 @@ namespace InteropTest
             Console.WriteLine("ryzen_access.mp1_smu: " + access.mp1_smu);
             Console.WriteLine("ryzen_access.psmu: " + access.psmu);
 
+            // Set STAPM limit.
+            ryzenApi.SetStapmLimit(access, 25000);
+
             Console.ReadLine();
 
             //APIInterop api = new APIInterop();

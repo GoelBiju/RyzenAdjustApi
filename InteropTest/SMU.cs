@@ -174,7 +174,7 @@ namespace InteropTest
 
             // Debug information.
             Console.WriteLine("SMU_SERVICE REQ_ID: 0x" + id);
-            Console.WriteLine("SMU_SERVICE REQ: arg0: 0x{0}, arg1: 0x{1}, arg2: 0x{2}, " +
+            Console.WriteLine("SMU_SERVICE REQ: arg0: 0x{0:X}, arg1: 0x{1}, arg2: 0x{2}, " +
                 "arg3: 0x{3}, arg4: 0x{4}, arg5: 0x{5}",
                 args.arg0, args.arg1, args.arg2, args.arg3, args.arg4, args.arg5);
 
