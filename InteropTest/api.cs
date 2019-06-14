@@ -83,7 +83,21 @@ namespace InteropTest
             }
 
             // Similar process with psmu.
+            ry.psmu.nb = 1;
+            ry.psmu = accessSmu.GetSMU(ry.nb, SMU_TYPE.TYPE_PSMU);
+            if (ry.psmu.nb == 1)
+            {
+                Console.WriteLine("PSMU nb still set to 1.");
+                return ry;
+            }
 
+            // Check if the device is a Ryzen nb SMU.
+            accessSmu.SMUServiceReq(ry.mp1_smu, 0x3, args);
+            if (args.arg0 < 0x5)
+            {
+                Console.WriteLine("Not a Ryzen NB SMU, BIOS Interface Version: 0x{0}", args.arg0);
+                return ry;
+            }
 
             Console.WriteLine("Initialised and returning ryzen_access object.");
             // Return the ryzen access object.
