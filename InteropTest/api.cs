@@ -81,6 +81,7 @@ namespace InteropTest
                 Console.WriteLine("MP1_SMU nb still set to 1.");
                 return ry;
             }
+            Console.WriteLine("PSMU nb set to: " + ry.mp1_smu.nb);
 
             // Similar process with psmu.
             ry.psmu.nb = 1;
@@ -90,9 +91,11 @@ namespace InteropTest
                 Console.WriteLine("PSMU nb still set to 1.");
                 return ry;
             }
+            Console.WriteLine("PSMU nb set to: " + ry.psmu.nb);
 
             // Check if the device is a Ryzen nb SMU.
-            accessSmu.SMUServiceReq(ry.mp1_smu, 0x3, args);
+            args = accessSmu.SMUServiceReq(ry.mp1_smu, 0x3, args).args;
+            Console.WriteLine(args.arg0);
             if (args.arg0 < 0x5)
             {
                 Console.WriteLine("Not a Ryzen NB SMU, BIOS Interface Version: 0x{0}", args.arg0);

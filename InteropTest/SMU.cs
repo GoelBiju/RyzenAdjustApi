@@ -82,6 +82,14 @@ namespace InteropTest
             public uint arg5;
         }
 
+        // TODO: Custom response object (?)
+        public class smu_response
+        {
+            public uint response;
+
+            public smu_service_args_t args;
+        }
+
         private WinRing0 hwOps;
 
         public SMU()
@@ -103,6 +111,9 @@ namespace InteropTest
             return hwOps.get_nb(obj);
         }
         // void free_nb(nb_t nb);
+
+
+        // SMU related methods.
 
         // smu_t get_smu(nb_t nb, int smu_type);
         public smu_t GetSMU(uint nb, SMU_TYPE smu_type)
@@ -145,7 +156,7 @@ namespace InteropTest
             }
 
             // Send a test message.
-            rep = SMUServiceReq(smu, SMU_TEST_MSG, arg);
+            rep = SMUServiceReq(smu, SMU_TEST_MSG, arg).response;
             if (rep != REP_MSG_OK)
                 Console.WriteLine("Failed to get SMU: {0}, test message REP: {1}", smu_type, rep);
 
@@ -155,9 +166,11 @@ namespace InteropTest
 
 
         // u32 smu_service_req(smu_t smu, u32 id, smu_service_args_t *args);
-        public uint SMUServiceReq(smu_t smu, uint id, smu_service_args_t args)
+        public smu_response SMUServiceReq(smu_t smu, uint id, smu_service_args_t args)
         {
+            smu_response serviceResponse = new smu_response();
             uint response = 0x0;
+            //smu_service_args_t args = *inArgs;
 
             // Debug information.
             Console.WriteLine("SMU_SERVICE REQ_ID: 0x" + id);
@@ -199,11 +212,16 @@ namespace InteropTest
                 "arg3: 0x{4}, arg4: 0x{5}, arg5: 0x{6}",
                 response, args.arg0, args.arg1, args.arg2, args.arg3, args.arg4, args.arg5);
 
-            return response;
+            Console.WriteLine(args.arg0);
+
+            // Create smu_response object.
+            serviceResponse.response = response;
+            serviceResponse.args = args;
+
+            //return response;
+            return serviceResponse;
         }
 
-
-        // SMU related methods.
 
         // u32 smn_reg_read(nb_t nb, u32 addr);
 
