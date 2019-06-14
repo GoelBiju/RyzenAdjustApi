@@ -27,7 +27,8 @@ namespace InteropTest
             Console.WriteLine("ryzen_access.psmu: " + access.psmu);
 
             // Set STAPM limit.
-            ryzenApi.SetStapmLimit(access, 25000);
+            int value = 20000;
+            bool result = ryzenApi.SetStapmLimit(access, value);
 
             Console.ReadLine();
 

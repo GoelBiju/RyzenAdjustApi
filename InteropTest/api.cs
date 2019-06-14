@@ -107,17 +107,21 @@ namespace InteropTest
             return ry;
         }
 
-        public int SetStapmLimit(ryzen_access ry, uint value)
+        public bool SetStapmLimit(ryzen_access ry, int value)
         {
             smu_service_args_t args = new smu_service_args_t();
-            args.arg0 = value;
+            args.arg0 = (uint)value;
 
-            if (accessSmu.SMUServiceReq(ry.mp1_smu, 0x1a, args).response == 0x01)
+            smu_response smuResp = accessSmu.SMUServiceReq(ry.mp1_smu, 0x1a, args);
+
+            if (smuResp.response == 0x01)
             {
-                return 0;
+                Console.WriteLine("Successfully set STAPM limit to: " + value);
+                return true;
             } else
             {
-                return -1;
+                Console.WriteLine("Failed SMU request - Response: {0}", smuResp.response);
+                return false;
             }
         }
     }

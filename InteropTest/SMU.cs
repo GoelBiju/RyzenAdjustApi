@@ -173,9 +173,9 @@ namespace InteropTest
             //smu_service_args_t args = *inArgs;
 
             // Debug information.
-            Console.WriteLine("SMU_SERVICE REQ_ID: 0x" + id);
-            Console.WriteLine("SMU_SERVICE REQ: arg0: 0x{0:X}, arg1: 0x{1}, arg2: 0x{2}, " +
-                "arg3: 0x{3}, arg4: 0x{4}, arg5: 0x{5}",
+            Console.WriteLine("SMU_SERVICE REQ_ID: 0x{0:X}", id);
+            Console.WriteLine("SMU_SERVICE REQ: arg0: 0x{0:X}, arg1: 0x{1:X}, arg2: 0x{2:X}, " +
+                "arg3: 0x{3:X}, arg4: 0x{4:X}, arg5: 0x{5:X}",
                 args.arg0, args.arg1, args.arg2, args.arg3, args.arg4, args.arg5);
 
 
@@ -208,8 +208,8 @@ namespace InteropTest
             args.arg5 = hwOps.smn_reg_read(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 5));
 
             // Response.
-            Console.WriteLine("SMU_SERVICE REP: REP: 0x{0}, arg0: 0x{1}, arg1: 0x{2}, arg2: 0x{3}, " +
-                "arg3: 0x{4}, arg4: 0x{5}, arg5: 0x{6}",
+            Console.WriteLine("SMU_SERVICE REP: REP: 0x{0:X}, arg0: 0x{1:X}, arg1: 0x{2:X}, arg2: 0x{3:X}, " +
+                "arg3: 0x{4:X}, arg4: 0x{5:X}, arg5: 0x{6:X}",
                 response, args.arg0, args.arg1, args.arg2, args.arg3, args.arg4, args.arg5);
 
             Console.WriteLine(args.arg0);
