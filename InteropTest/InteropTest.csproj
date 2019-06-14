@@ -66,10 +66,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="api.cs" />
     <Compile Include="APIInterop.cs" />
     <Compile Include="OpenLibSys.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SMU.cs" />
+    <Compile Include="WinRing0.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
