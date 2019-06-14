@@ -71,9 +71,18 @@ namespace InteropTest
                 return ry;
             }
 
-            //
-            //ry.mp1_smu = get_smu(ry.nb, SMU_TYPE.TYPE_MP1);
+            // TODO: smu_t will never be null, so check contents before continuing.
+            //       Set ry.mp1_smu.nb to 1 by default, GetSMU will provide new SMU set to 0.
+            //       If the get failed then nb will still be set to 1.
+            ry.mp1_smu.nb = 1;
+            ry.mp1_smu = accessSmu.GetSMU(ry.nb, SMU_TYPE.TYPE_MP1);
+            if (ry.mp1_smu.nb == 1)
+            {
+                Console.WriteLine("MP1_SMU nb still set to 1.");
+                return ry;
+            }
 
+            // Similar process with psmu.
 
 
             Console.WriteLine("Initialised and returning ryzen_access object.");
