@@ -35,7 +35,7 @@ namespace InteropTest
         public const int NB_PCI_REG_DATA_ADDR = 0xBC;
 
         //
-        public static int C2PMSG_ARGx_ADDR(uint y, int x) => (int)(y + 4 * x);
+        public static uint C2PMSG_ARGx_ADDR(uint y, int x) => (uint)(y + 4 * x);
 
         //
         public enum SMU_TYPE
@@ -104,16 +104,103 @@ namespace InteropTest
         }
         // void free_nb(nb_t nb);
 
+        // smu_t get_smu(nb_t nb, int smu_type);
+        public smu_t GetSMU(uint nb, SMU_TYPE smu_type)
+        {
+            // Create new SMU structure.
+            smu_t smu = new smu_t();
 
-        //public smu_t GetSMU(uint nb, int smu_type)
-        //{
-        //    // Create new SMU structure.
-        //    smu_t smu = new smu_t();
+            // Test message response and arguments.
+            uint rep;
+            smu_service_args_t arg = new smu_service_args_t
+            {
+                arg0 = 0,
+                arg1 = 0,
+                arg2 = 0,
+                arg3 = 0,
+                arg4 = 0,
+                arg5 = 0
+            };
 
-        //    // Test message response and arguments.
-        //    uint rep;
-        //    smu_service_args_t arg = new smu_service_args_t
-        //}
+            // Fill the SMU information.
+            smu.nb = nb;
+
+            switch (smu_type)
+            {
+                case SMU_TYPE.TYPE_MP1:
+                    smu.msg = MP1_C2PMSG_MESSAGE_ADDR;
+                    smu.rep = MP1_C2PMSG_RESPONSE_ADDR;
+                    smu.arg_base = MP1_C2PMSG_ARG_BASE;
+                    break;
+
+                case SMU_TYPE.TYPE_PSMU:
+                    smu.msg = PSMU_C2PMSG_MESSAGE_ADDR;
+                    smu.rep = PSMU_C2PMSG_RESPONSE_ADDR;
+                    smu.arg_base = PSMU_C2PMSG_ARG_BASE;
+                    break;
+
+                default:
+                    Console.WriteLine("Failed to get SMU, unknown SMU_TYPE: " + smu_type);
+                    break;
+            }
+
+            // Send a test message.
+            rep = SMUServiceReq(smu, SMU_TEST_MSG, arg);
+            if (rep != REP_MSG_OK)
+                Console.WriteLine("Failed to get SMU: {0}, test message REP: {1}", smu_type, rep);
+
+            Console.WriteLine("SMU_TYPE: {0}, Test message response: {1}", smu_type, rep);
+            return smu;
+        }
+
+
+        // u32 smu_service_req(smu_t smu, u32 id, smu_service_args_t *args);
+        public uint SMUServiceReq(smu_t smu, uint id, smu_service_args_t args)
+        {
+            uint response = 0x0;
+
+            // Debug information.
+            Console.WriteLine("SMU_SERVICE REQ_ID: 0x" + id);
+            Console.WriteLine("SMU_SERVICE REQ: arg0: 0x{0}, arg1: 0x{1}, arg2: 0x{2}, " +
+                "arg3: 0x{3}, arg4: 0x{4}, arg5: 0x{5}",
+                args.arg0, args.arg1, args.arg2, args.arg3, args.arg4, args.arg5);
+
+
+            // Clear the response.
+            hwOps.smn_reg_write(smu.nb, smu.rep, 0x0);
+
+            // Pass arguments.
+            hwOps.smn_reg_write(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 0), args.arg0);
+            hwOps.smn_reg_write(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 1), args.arg1);
+            hwOps.smn_reg_write(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 2), args.arg2);
+            hwOps.smn_reg_write(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 3), args.arg3);
+            hwOps.smn_reg_write(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 4), args.arg4);
+            hwOps.smn_reg_write(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 5), args.arg5);
+
+            // Send message ID.
+            hwOps.smn_reg_write(smu.nb, smu.msg, id);
+
+            // Wait until response has changed.
+            while (response == 0x0)
+            {
+                response = hwOps.smn_reg_read(smu.nb, smu.rep);
+            }
+
+            // Read back arguments.
+            args.arg0 = hwOps.smn_reg_read(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 0));
+            args.arg1 = hwOps.smn_reg_read(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 1));
+            args.arg2 = hwOps.smn_reg_read(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 2));
+            args.arg3 = hwOps.smn_reg_read(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 3));
+            args.arg4 = hwOps.smn_reg_read(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 4));
+            args.arg5 = hwOps.smn_reg_read(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 5));
+
+            // Response.
+            Console.WriteLine("SMU_SERVICE REP: REP: 0x{0}, arg0: 0x{1}, arg1: 0x{2}, arg2: 0x{3}, " +
+                "arg3: 0x{4}, arg4: 0x{5}, arg5: 0x{6}",
+                response, args.arg0, args.arg1, args.arg2, args.arg3, args.arg4, args.arg5);
+
+            return response;
+        }
 
 
         // SMU related methods.

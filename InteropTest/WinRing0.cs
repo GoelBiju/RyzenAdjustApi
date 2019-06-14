@@ -44,8 +44,23 @@ namespace InteropTest
         // nb_t - uint
         public int get_nb(bool obj)
         {
-            Console.WriteLine("Returning nb: ", nb_pci_address);
+            Console.WriteLine("Returning nb: " + nb_pci_address);
             return nb_pci_address;
+        }
+
+
+        // uint smn_reg_read(nb_t nb, u32 addr);
+        public uint smn_reg_read(uint nb, uint addr)
+        {
+            ols.WritePciConfigDword(nb, SMU.NB_PCI_REG_ADDR_ADDR, (uint)(addr & (~0x3)));
+            return ols.ReadPciConfigDword(nb, SMU.NB_PCI_REG_DATA_ADDR);
+        }
+
+        // void smn_reg_write(nb_t nb, u32 addr, u32 data);
+        public void smn_reg_write(uint nb, uint addr, uint data)
+        {
+            ols.WritePciConfigDword(nb, SMU.NB_PCI_REG_ADDR_ADDR, addr);
+            ols.WritePciConfigDword(nb, SMU.NB_PCI_REG_DATA_ADDR, data);
         }
     }
 }

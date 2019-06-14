@@ -20,6 +20,12 @@ namespace InteropTest
             // Get a ryzen_access object to use.
             access = ryzenApi.InitialiseRyzenAdj();
 
+            // Show ryzen_access properties.
+            Console.WriteLine("ryzen_access.pci_obj: " + access.pci_obj);
+            Console.WriteLine("ryzen_access.nb: " + access.nb);
+            Console.WriteLine("ryzen_access.mp1_smu: " + access.mp1_smu);
+            Console.WriteLine("ryzen_access.psmu: " + access.psmu);
+
             Console.ReadLine();
 
             //APIInterop api = new APIInterop();
