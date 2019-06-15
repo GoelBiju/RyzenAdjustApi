@@ -98,7 +98,13 @@ namespace InteropTest
             Console.WriteLine("Initialised WinRing0 object for general use.");
         }
 
+
         // TODO: Convenience methods for accessing WinRing0.
+
+        public bool Initialise()
+        {
+            return hwOps.Initialise();
+        }
 
         public bool InitialisePCIObj()
         {
@@ -215,14 +221,9 @@ namespace InteropTest
         }
 
 
-        // u32 smn_reg_read(nb_t nb, u32 addr);
-
-        // void smn_reg_write(nb_t nb, u32 addr, u32 data);
-
-        // smu_t get_smu(nb_t nb, int smu_type);
-
-        // void free_smu(smu_t smu);
-
-        // u32 smu_service_req(smu_t smu, u32 id, smu_service_args_t *args);
+        public void Deinitialise()
+        {
+            hwOps.Deinitialise();
+        }
     }
 }

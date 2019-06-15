@@ -66,8 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="api.cs" />
-    <Compile Include="APIInterop.cs" />
+    <Compile Include="AdjustApi.cs" />
     <Compile Include="OpenLibSys.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,9 +86,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="libryzenadj.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="WinRing0x64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

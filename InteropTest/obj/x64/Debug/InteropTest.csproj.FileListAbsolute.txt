@@ -1,4 +1,3 @@
-C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\libryzenadj.dll
 C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\InteropTest.exe.config
 C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\InteropTest.exe
 C:\Users\Goel\Desktop\RyzenAdj-InteropTest\InteropTest\bin\x64\Debug\InteropTest.pdb
