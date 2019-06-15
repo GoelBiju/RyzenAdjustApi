@@ -27,8 +27,19 @@ namespace InteropTest
             Console.WriteLine("ryzen_access.psmu: " + access.psmu);
 
             // Set STAPM limit.
-            int value = 20000;
-            bool result = ryzenApi.SetStapmLimit(access, value);
+            //int value = 25000;
+            //bool result = ryzenApi.SetStapmLimit(access, value);
+
+            // TODO: Holds graphics clock at 1100Mhz as long as the 
+            //       the temperature does not reach 85c (possibly due to thermal limit).
+            //ryzenApi.ServiceRequest(access, )
+            ryzenApi.SetVrmCurrentLimit(access, 50000);
+            ryzenApi.SetVrmSoCCurrentLimit(access, 50000);
+            ryzenApi.SetVrmMaxCurrentLimit(access, 60000);
+            ryzenApi.SetMinGfxClkFreq(access, 1100);
+            ryzenApi.SetMaxGfxClkFreq(access, 1100);
+            ryzenApi.ServiceRequest(access, 0x43, 0);
+            ryzenApi.ServiceRequest(access, 0x36, 50000);
 
             Console.ReadLine();
 

@@ -41,15 +41,7 @@ namespace InteropTest
         public ryzen_access InitialiseRyzenAdj()
         {
             //
-            smu_service_args_t args = new smu_service_args_t
-            {
-                arg0 = 0,
-                arg1 = 0,
-                arg2 = 0,
-                arg3 = 0,
-                arg4 = 0,
-                arg5 = 0
-            };
+            smu_service_args_t args = new smu_service_args_t();
 
             // 
             ryzen_access ry = new ryzen_access();
@@ -107,22 +99,182 @@ namespace InteropTest
             return ry;
         }
 
-        public bool SetStapmLimit(ryzen_access ry, int value)
+
+        public bool ServiceRequest(ryzen_access ry, int id, int value)
         {
             smu_service_args_t args = new smu_service_args_t();
             args.arg0 = (uint)value;
 
-            smu_response smuResp = accessSmu.SMUServiceReq(ry.mp1_smu, 0x1a, args);
-
+            smu_response smuResp = accessSmu.SMUServiceReq(ry.mp1_smu, (uint)id, args);
             if (smuResp.response == 0x01)
             {
-                Console.WriteLine("Successfully set STAPM limit to: " + value);
+                Console.WriteLine("Successful SMU request - Response: {0}", smuResp.response);
                 return true;
-            } else
-            {
-                Console.WriteLine("Failed SMU request - Response: {0}", smuResp.response);
-                return false;
             }
+            Console.WriteLine("Failed SMU request - Response: {0}", smuResp.response);
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ry"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetStapmLimit(ryzen_access ry, int value)
+        {
+            //smu_service_args_t args = new smu_service_args_t();
+            //args.arg0 = (uint)value;
+
+            //smu_response smuResp = accessSmu.SMUServiceReq(ry.mp1_smu, 0x1a, args);
+
+            //if (smuResp.response == 0x01)
+            //{
+            //    Console.WriteLine("Successfully set STAPM limit to: " + value);
+            //    return true;
+            //} else
+            //{
+            //    Console.WriteLine("Failed SMU request - Response: {0}", smuResp.response);
+            //    return false;
+            //}
+
+            return ServiceRequest(ry, 0x1a, value);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ry"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetFastLimit(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x1b, value);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ry"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetSlowLimit(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x1c, value);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ry"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetSlowTime(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x1d, value);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ry"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetStapmTime(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x1e, value);
+        }
+
+
+        public bool SetTctlTemp(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x1f, value);
+        }
+
+
+        public bool SetVrmCurrentLimit(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x20, value);
+        }
+
+
+        public bool SetVrmSoCCurrentLimit(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x21, value);
+        }
+
+        public bool SetVrmMaxCurrentLimit(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x22, value);
+        }
+
+        public bool SetVrmSoCMaxCurrentLimit(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x23, value);
+        }
+
+        public bool SetPsi0CurrentLimit(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x24, value);
+        }
+
+        public bool SetPsi0SoCCurrentLimit(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x25, value);
+        }
+
+        public bool SetMaxGfxClkFreq(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x46, value);
+        }
+
+        public bool SetMinGfxClkFreq(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x47, value);
+        }
+
+        public bool SetMaxSoCClkFreq(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x48, value);
+        }
+
+        public bool SetMinSoCClkFreq(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x49, value);
+        }
+
+        public bool SetMaxFClkFreq(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x4A, value);
+        }
+
+        public bool SetMinFClkFreq(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x4B, value);
+        }
+
+        public bool SetMaxVcn(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x4C, value);
+        }
+
+        public bool SetMinVcn(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x4D, value);
+        }
+
+        public bool SetMaxLClk(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x4E, value);
+        }
+
+        public bool SetMinLClk(ryzen_access ry, int value)
+        {
+            return ServiceRequest(ry, 0x4F, value);
         }
     }
 }

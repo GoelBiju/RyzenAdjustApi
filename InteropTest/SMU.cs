@@ -123,15 +123,7 @@ namespace InteropTest
 
             // Test message response and arguments.
             uint rep;
-            smu_service_args_t arg = new smu_service_args_t
-            {
-                arg0 = 0,
-                arg1 = 0,
-                arg2 = 0,
-                arg3 = 0,
-                arg4 = 0,
-                arg5 = 0
-            };
+            smu_service_args_t arg = new smu_service_args_t();
 
             // Fill the SMU information.
             smu.nb = nb;
