@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-using static InteropTest.Definitions;
-using static InteropTest.SMU;
+using static RyzenAdjustApi.Definitions;
+using static RyzenAdjustApi.SMU;
 
 
-namespace InteropTest
+namespace RyzenAdjustApi
 {
     // TODO: Ryzen Access object:
     //          - nb (type: nb_t - uint32_t - int)

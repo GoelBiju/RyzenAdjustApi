@@ -5,9 +5,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-using static InteropTest.Definitions;
+using static RyzenAdjustApi.Definitions;
 
-namespace InteropTest
+
+namespace RyzenAdjustApi
 {
     public unsafe class SMU
     {
@@ -139,7 +140,7 @@ namespace InteropTest
             smu_t smu = new smu_t();
 
             // Test message response and arguments.
-            uint rep;
+            //uint rep;
             smu_service_args_t arg = new smu_service_args_t();
 
             // Fill the SMU information.

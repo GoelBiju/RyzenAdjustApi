@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using OpenLibSys;
 
-namespace InteropTest
+namespace RyzenAdjustApi
 {
     class Program
     {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteropTest", "InteropTest\InteropTest.csproj", "{63A633BB-EB2D-4B1A-9AD8-1C281D456C63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RyzenAdjustApi", "RyzenAdjustApi\RyzenAdjustApi.csproj", "{63A633BB-EB2D-4B1A-9AD8-1C281D456C63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
