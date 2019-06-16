@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using static InteropTest.Definitions;
+
 namespace InteropTest
 {
     public unsafe class SMU
@@ -56,11 +58,11 @@ namespace InteropTest
         public const int PSMU_C2PMSG_ARG_BASE = 0x3B10a88;
 
         //
-        public const int REP_MSG_OK = 0x1;
-        public const int REP_MSG_FAILED = 0xFF;
-        public const int REP_MSG_UNKNOWN_CMD = 0xFE;
-        public const int REP_MSG_CMD_REJECTED_PREREQ = 0xFD;
-        public const int REP_MSG_CMD_REJECTED_BUSY = 0xFC;
+        //public const int REP_MSG_OK = 0x1;
+        //public const int REP_MSG_FAILED = 0xFF;
+        //public const int REP_MSG_UNKNOWN_CMD = 0xFE;
+        //public const int REP_MSG_CMD_REJECTED_PREREQ = 0xFD;
+        //public const int REP_MSG_CMD_REJECTED_BUSY = 0xFC;
 
         //
         public const int SMU_TEST_MSG = 0x1;
@@ -82,6 +84,7 @@ namespace InteropTest
             public uint arg5;
         }
 
+
         // TODO: Custom response object (?)
         public class smu_response
         {
@@ -100,12 +103,20 @@ namespace InteropTest
 
 
         // TODO: Convenience methods for accessing WinRing0.
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool Initialise()
         {
             return hwOps.Initialise();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool InitialisePCIObj()
         {
             return hwOps.init_pci_obj();
@@ -154,17 +165,17 @@ namespace InteropTest
             }
 
             // Send a test message.
-            rep = SMUServiceReq(smu, SMU_TEST_MSG, arg).response;
-            if (rep != REP_MSG_OK)
-                Console.WriteLine("Failed to get SMU: {0}, test message REP: {1}", smu_type, rep);
+            SMUResponseCode resp = (SMUResponseCode)SMUServiceReq(smu, Messages.TestMessage, arg).response;
+            if (resp != SMUResponseCode.Result_OK)
+                Console.WriteLine("Failed to get SMU: {0}, test message REP: {1}", smu_type, resp);
 
-            Console.WriteLine("SMU_TYPE: {0}, Test message response: {1}", smu_type, rep);
+            Console.WriteLine("SMU_TYPE: {0}, Test message response: {1}", smu_type, resp);
             return smu;
         }
 
 
         // u32 smu_service_req(smu_t smu, u32 id, smu_service_args_t *args);
-        public smu_response SMUServiceReq(smu_t smu, uint id, smu_service_args_t args)
+        public smu_response SMUServiceReq(smu_t smu, Messages id, smu_service_args_t args)
         {
             smu_response serviceResponse = new smu_response();
             uint response = 0x0;
@@ -189,13 +200,17 @@ namespace InteropTest
             hwOps.smn_reg_write(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 5), args.arg5);
 
             // Send message ID.
-            hwOps.smn_reg_write(smu.nb, smu.msg, id);
+            hwOps.smn_reg_write(smu.nb, smu.msg, (uint)id);
 
             // Wait until response has changed.
-            while (response == 0x0)
+            //while (response == 0x0)
+            //{
+            //    response = hwOps.smn_reg_read(smu.nb, smu.rep);
+            //}
+            do
             {
                 response = hwOps.smn_reg_read(smu.nb, smu.rep);
-            }
+            } while (response == 0x0);
 
             // Read back arguments.
             args.arg0 = hwOps.smn_reg_read(smu.nb, C2PMSG_ARGx_ADDR(smu.arg_base, 0));
@@ -221,6 +236,9 @@ namespace InteropTest
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Deinitialise()
         {
             hwOps.Deinitialise();

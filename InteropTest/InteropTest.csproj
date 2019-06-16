@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdjustApi.cs" />
+    <Compile Include="Definitions.cs" />
     <Compile Include="OpenLibSys.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

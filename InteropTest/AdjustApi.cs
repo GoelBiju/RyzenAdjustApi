@@ -4,7 +4,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+
+using static InteropTest.Definitions;
 using static InteropTest.SMU;
+
 
 namespace InteropTest
 {
@@ -117,7 +120,7 @@ namespace InteropTest
             Console.WriteLine("PSMU nb set to: " + ry.psmu.nb);
 
             // Check if the device is a Ryzen nb SMU.
-            args = accessSmu.SMUServiceReq(ry.mp1_smu, 0x3, args).args;
+            args = accessSmu.SMUServiceReq(ry.mp1_smu, Definitions.Messages.GetBiosIfVersion, args).args;
             Console.WriteLine(args.arg0);
             if (args.arg0 < 0x5)
             {
@@ -137,14 +140,14 @@ namespace InteropTest
         /// <param name="id"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public bool ServiceRequest(ryzen_access ry, int id, int value)
+        public bool ServiceRequest(ryzen_access ry, Messages id, int value)
         {
             if (initialised)
             {
                 smu_service_args_t args = new smu_service_args_t();
                 args.arg0 = (uint)value;
 
-                smu_response smuResp = accessSmu.SMUServiceReq(ry.mp1_smu, (uint)id, args);
+                smu_response smuResp = accessSmu.SMUServiceReq(ry.mp1_smu, id, args);
                 if (smuResp.response == 0x01)
                 {
                     Console.WriteLine("Successful SMU request - Response: {0}", smuResp.response);
@@ -166,22 +169,7 @@ namespace InteropTest
         /// <returns></returns>
         public bool SetStapmLimit(ryzen_access ry, int value)
         {
-            //smu_service_args_t args = new smu_service_args_t();
-            //args.arg0 = (uint)value;
-
-            //smu_response smuResp = accessSmu.SMUServiceReq(ry.mp1_smu, 0x1a, args);
-
-            //if (smuResp.response == 0x01)
-            //{
-            //    Console.WriteLine("Successfully set STAPM limit to: " + value);
-            //    return true;
-            //} else
-            //{
-            //    Console.WriteLine("Failed SMU request - Response: {0}", smuResp.response);
-            //    return false;
-            //}
-
-            return ServiceRequest(ry, 0x1a, value);
+            return ServiceRequest(ry, Messages.SetSustainedPowerLimit, value);
         }
 
 
@@ -193,7 +181,7 @@ namespace InteropTest
         /// <returns></returns>
         public bool SetFastLimit(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x1b, value);
+            return ServiceRequest(ry, Messages.SetFastPPTLimit, value);
         }
 
 
@@ -205,7 +193,7 @@ namespace InteropTest
         /// <returns></returns>
         public bool SetSlowLimit(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x1c, value);
+            return ServiceRequest(ry, Messages.SetSlowPPTLimit, value);
         }
 
 
@@ -217,7 +205,7 @@ namespace InteropTest
         /// <returns></returns>
         public bool SetSlowTime(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x1d, value);
+            return ServiceRequest(ry, Messages.SetSlowPPTTimeConstant, value);
         }
 
 
@@ -229,95 +217,95 @@ namespace InteropTest
         /// <returns></returns>
         public bool SetStapmTime(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x1e, value);
+            return ServiceRequest(ry, Messages.SetStapmTimeConstant, value);
         }
 
 
-        public bool SetTctlTemp(ryzen_access ry, int value)
+        public bool SetTemperatureLimit(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x1f, value);
+            return ServiceRequest(ry, Messages.SetTctlMax, value);
         }
 
 
         public bool SetVrmCurrentLimit(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x20, value);
+            return ServiceRequest(ry, Messages.SetVrmCurrentLimit, value);
         }
 
 
         public bool SetVrmSoCCurrentLimit(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x21, value);
+            return ServiceRequest(ry, Messages.SetVrmSocCurrentLimit, value);
         }
 
         public bool SetVrmMaxCurrentLimit(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x22, value);
+            return ServiceRequest(ry, Messages.SetVrmMaximumCurrentLimit, value);
         }
 
         public bool SetVrmSoCMaxCurrentLimit(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x23, value);
+            return ServiceRequest(ry, Messages.SetVrmSocMaximumCurrentLimit, value);
         }
 
         public bool SetPsi0CurrentLimit(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x24, value);
+            return ServiceRequest(ry, Messages.SetPSI0CurrentLimit, value);
         }
 
         public bool SetPsi0SoCCurrentLimit(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x25, value);
+            return ServiceRequest(ry, Messages.SetPSI0SocCurrentLimit, value);
         }
 
         public bool SetMaxGfxClkFreq(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x46, value);
+            return ServiceRequest(ry, Messages.SetSoftMaxGfxClk, value);
         }
 
         public bool SetMinGfxClkFreq(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x47, value);
+            return ServiceRequest(ry, Messages.SetSoftMinGfxClk, value);
         }
 
         public bool SetMaxSoCClkFreq(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x48, value);
+            return ServiceRequest(ry, Messages.SetSoftMaxSocclkByFreq, value);
         }
 
         public bool SetMinSoCClkFreq(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x49, value);
+            return ServiceRequest(ry, Messages.SetSoftMinSocclkByFreq, value);
         }
 
         public bool SetMaxFClkFreq(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x4A, value);
+            return ServiceRequest(ry, Messages.SetSoftMaxFclkByFreq, value);
         }
 
         public bool SetMinFClkFreq(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x4B, value);
+            return ServiceRequest(ry, Messages.SetSoftMinFclkByFreq, value);
         }
 
         public bool SetMaxVcn(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x4C, value);
+            return ServiceRequest(ry, Messages.SetSoftMaxVcn, value);
         }
 
         public bool SetMinVcn(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x4D, value);
+            return ServiceRequest(ry, Messages.SetSoftMinVcn, value);
         }
 
         public bool SetMaxLClk(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x4E, value);
+            return ServiceRequest(ry, Messages.SetSoftMaxLclk, value);
         }
 
         public bool SetMinLClk(ryzen_access ry, int value)
         {
-            return ServiceRequest(ry, 0x4F, value);
+            return ServiceRequest(ry, Messages.SetSoftMaxLclk, value);
         }
 
 
