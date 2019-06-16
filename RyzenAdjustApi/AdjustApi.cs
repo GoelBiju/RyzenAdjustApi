@@ -30,7 +30,7 @@ namespace RyzenAdjustApi
         public smu_t psmu;
     }
 
-    unsafe class AdjustApi
+    public unsafe class AdjustApi
     {
         //private WinRing0 hw;
         private SMU accessSmu;
@@ -142,6 +142,8 @@ namespace RyzenAdjustApi
         /// <returns></returns>
         public bool ServiceRequest(ryzen_access ry, Messages id, int value)
         {
+            // TODO: Ensure that the ryzen access object is suitable for use
+            // (check all properties of the ryzen_access struct).
             if (initialised)
             {
                 smu_service_args_t args = new smu_service_args_t();
